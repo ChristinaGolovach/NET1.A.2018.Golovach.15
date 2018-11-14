@@ -93,6 +93,8 @@ namespace QueueLogic
         /// </param>
         public void Enqueue(T item)
         {
+            //TODO IF item is null
+
             if (IsFull())
             {
                 int length = queueItems.Length == 0 ? DEFAULTCAPACITY : (int)(queueItems.Length * 1.5);
@@ -150,6 +152,8 @@ namespace QueueLogic
 
             return queueItems[head];
         }
+
+        //TODO Contains
 
         /// <summary>
         /// Check for emptiness of queue.

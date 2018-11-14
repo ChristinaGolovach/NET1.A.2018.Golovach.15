@@ -3,7 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueueLogic", "QueueLogic\QueueLogic.csproj", "{63323F2F-2256-4732-87D0-8BC1137B459F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueueLogic.Tests", "QueueLogic.Tests\QueueLogic.Tests.csproj", "{0EF1DFDD-1F91-427B-BA10-E740E2CDCAE8}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{63323F2F-2256-4732-87D0-8BC1137B459F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63323F2F-2256-4732-87D0-8BC1137B459F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63323F2F-2256-4732-87D0-8BC1137B459F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63323F2F-2256-4732-87D0-8BC1137B459F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EF1DFDD-1F91-427B-BA10-E740E2CDCAE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EF1DFDD-1F91-427B-BA10-E740E2CDCAE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EF1DFDD-1F91-427B-BA10-E740E2CDCAE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EF1DFDD-1F91-427B-BA10-E740E2CDCAE8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
