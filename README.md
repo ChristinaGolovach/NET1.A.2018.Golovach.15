@@ -1,6 +1,6 @@
 # NET1.A.2018.Golovach.15
 
-[Решение](https://github.com/ChristinaGolovach/NET1.A.2018.Golovach.15/blob/master/QueueLogic/Queue.cs)
+[Решение](https://github.com/ChristinaGolovach/NET1.A.2018.Golovach.15/blob/master/QueueLogic/Queue.cs) - 
 [Тесты](https://github.com/ChristinaGolovach/NET1.A.2018.Golovach.15/blob/master/QueueLogic.Tests/Tests.cs)
 
 # Задание
