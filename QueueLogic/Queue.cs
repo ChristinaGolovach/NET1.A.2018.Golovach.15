@@ -2,11 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QueueLogic
 {
+    /// <summary>
+    /// The class that implements the data structure of the queue.
+    /// </summary>
+    /// <typeparam name="T">
+    /// Any type.
+    /// </typeparam>
     public class Queue<T> : IEnumerable<T>
     {
         private T[] queueItems;
@@ -16,25 +20,47 @@ namespace QueueLogic
         private int version;
 
         private const int DEFAULTCAPACITY = 4;
-
+        
         public int Count
         {
             get => count;
             private set => count = value;
         }
 
+        #region Constructors
+        /// <summary>
+        /// Create instance of Queue with default capacity = 4.
+        /// </summary>
         public Queue() : this (DEFAULTCAPACITY) { }
 
+        /// <summary>
+        /// Create instance of Queue with the given capacity.
+        /// </summary>
+        /// <param name="capacity">
+        /// The capacity queue.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// Thrown when <paramref name="capacity"/> less than zero.
+        /// </exception>
         public Queue(int capacity)
         {
             if (capacity < 0)
             {
-                throw new ArgumentNullException($"The {nameof(capacity)} can not be less zero.");
+                throw new ArgumentOutOfRangeException($"The {nameof(capacity)} can not be less zero.");
             }
             queueItems = new T[capacity];
             Count = 0;
         }
 
+        /// <summary>
+        /// Create a queue from the given collection.
+        /// </summary>
+        /// <param name="collection">
+        /// The target collection for the queue.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when <paramref name="collection"/> is null.
+        /// </exception>
         public Queue(IEnumerable<T> collection)
         {
             if (ReferenceEquals(collection, null))
@@ -57,7 +83,14 @@ namespace QueueLogic
                 Count = inputCollection.Length;
             }           
         }
+        #endregion Constructors
 
+        /// <summary>
+        /// Insert an item at the end of the queue.
+        /// </summary>
+        /// <param name="item">
+        /// The target item for the inserting.
+        /// </param>
         public void Enqueue(T item)
         {
             if (IsFull())
@@ -74,7 +107,16 @@ namespace QueueLogic
             Count++;
         }
 
-        public T Dequeue(T item)
+        /// <summary>
+        /// Get an item from the head of the queue.
+        /// </summary>
+        /// <returns>
+        /// The first item in queue.
+        /// </returns>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown if the queue is empty.
+        /// </exception>
+        public T Dequeue()
         {
             if (IsEmpty())
             {
@@ -90,6 +132,15 @@ namespace QueueLogic
             return headItem;
         }
 
+        /// <summary>
+        /// Show the first item of queue.
+        /// </summary>
+        /// <returns>
+        /// The first item of queue
+        /// </returns>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown if the queue is empty.
+        /// </exception>
         public T Peek()
         {
             if (IsEmpty())
@@ -100,11 +151,23 @@ namespace QueueLogic
             return queueItems[head];
         }
 
+        /// <summary>
+        /// Check for emptiness of queue.
+        /// </summary>
+        /// <returns>
+        /// true - if queue is empty. false - if queue is not empty.
+        /// </returns>
         public bool IsEmpty()
         {
             return Count == 0 ? true : false;
         }
 
+        /// <summary>
+        /// Check for filling  of queue.
+        /// </summary>
+        /// <returns>
+        /// true - if queue is full. false - if queue is not full.
+        /// </returns>
         public bool IsFull()
         {
             return Count == queueItems.Length ? true : false;
@@ -117,6 +180,12 @@ namespace QueueLogic
             version++;
         }
 
+        /// <summary>
+        /// Get iterator for the queue.
+        /// </summary>
+        /// <returns>
+        /// Instance of IEnumerator.
+        /// </returns>
         public IEnumerator<T> GetEnumerator()
         {
             return new Enumerator(this);
@@ -131,6 +200,8 @@ namespace QueueLogic
         {
            return GetEnumerator();
         }
+
+        #region Iterator implementation
 
         private struct Enumerator : IEnumerator<T>
         {
@@ -201,5 +272,7 @@ namespace QueueLogic
                 currentItem = default(T);
             }
         }
+
+        #endregion Iterator implementation
     }
 }
