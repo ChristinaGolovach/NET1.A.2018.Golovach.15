@@ -36,6 +36,11 @@ namespace QueueLogic.Tests
             return this.Price == other.Price && this.Name == other.Name;
         }
 
+        //public override bool Equals(object obj)
+        //{
+        //    return this.Equals(obj as BookIEquatable);
+        //}
+
         private static void CheckBooks(BookIEquatable firstBook, BookIEquatable secondBook)
         {
             if (ReferenceEquals(firstBook, null))

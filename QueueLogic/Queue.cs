@@ -93,8 +93,6 @@ namespace QueueLogic
         /// </param>
         public void Enqueue(T item)
         {
-            //TODO IF item is null
-
             if (IsFull())
             {
                 int length = queueItems.Length == 0 ? DEFAULTCAPACITY : (int)(queueItems.Length * 1.5);
@@ -153,7 +151,41 @@ namespace QueueLogic
             return queueItems[head];
         }
 
-        //TODO Contains
+        /// <summary>
+        /// Check if does exists given item in the queue.
+        /// </summary>
+        /// <param name="item">
+        /// The item for checking 
+        /// </param>
+        /// <returns>
+        /// true - if the given item exists in the queue, otherwice - false.
+        /// </returns>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown when the queue is empty.
+        /// </exception>
+        public bool Contains(T item)
+        {
+            if (IsEmpty())
+            {
+                throw new InvalidOperationException("The queue is empty.");
+            }
+
+            EqualityComparer<T> comparer = EqualityComparer<T>.Default;  
+            
+            for(int i = 0; i <= tail; i++)
+            {
+                if (ReferenceEquals(item, null) && ReferenceEquals(queueItems[i], null))
+                {
+                    return true;
+                }
+                else if (!ReferenceEquals(item, null) && comparer.Equals(queueItems[i], item))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
 
         /// <summary>
         /// Check for emptiness of queue.

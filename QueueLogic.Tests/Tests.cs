@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NUnit.Framework;
 using QueueLogic;
+using QueueLogic.Tests.ForTestsClesses;
 
 namespace QueueLogic.Tests
 {
@@ -78,6 +76,50 @@ namespace QueueLogic.Tests
             Assert.IsTrue(book.Name == "First");
         }
 
+
+        [Test]
+        public void Contains_CheckContinsIntItemTwo_ReturnTrue()
+        {
+            // Arrange
+            var queueOfInt = new Queue<int>(new int[] { 1, 4, -9 });
+
+            // Act - Assert
+            Assert.IsTrue(queueOfInt.Contains(-9));
+        }
+
+        [Test]
+        public void Contains_CheckContinsBookWithNameFirst_ReturnTrue()
+        {
+            // Arrange
+            var queueOfBook = new Queue<BookIEquatable>(new List<BookIEquatable>() { new BookIEquatable() { Price = 1, Name = "First" }});
+
+            // Act - Assert
+            Assert.IsTrue(queueOfBook.Contains(new BookIEquatable() { Price = 1, Name = "First" }));
+        }
+
+        [Test]
+        public void Contains_CheckContinsBookWithOverloadEquals_ReturnTrue()
+        {
+            // Arrange
+            BookOverloadEquals book = new BookOverloadEquals() { Price = 2, Name = "Second" };
+            var queueOfBooks = new Queue<BookOverloadEquals>(new List<BookOverloadEquals>() { new BookOverloadEquals() { Price = 1, Name = "First" }, book });
+
+            // Act - Assert
+            Assert.IsTrue(queueOfBooks.Contains(new BookOverloadEquals() { Price = 1, Name = "First" }));
+            Assert.IsTrue(queueOfBooks.Contains(book));
+        }
+
+        [Test]
+        public void Contains_CheckContinsBookWithNotOverloadEquals_ReturnTrue()
+        {
+            // Arrange
+            Book book = new Book() { Price = 2, Name = "Second" };
+            var queueOfBooks = new Queue<Book>(new List<Book>() { new Book() { Price = 1, Name = "First" }, book });
+
+            // Act - Assert
+            Assert.IsFalse(queueOfBooks.Contains(new Book() { Price = 1, Name = "First" }));
+            Assert.IsTrue(queueOfBooks.Contains(book));
+        }
 
         [Test]
         public void CetEnumeratorFromQueueOfBooks_OneStepMoveNext_AndCurrentBook_IteratorIsNotNull_CurrentBookNameisFirst()
