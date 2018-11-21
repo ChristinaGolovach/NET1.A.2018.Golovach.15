@@ -27,6 +27,11 @@ namespace QueueLogic
             private set => count = value;
         }
 
+        public int Capacity
+        {
+            get => queueItems.Length;
+        }
+
         #region Constructors
         /// <summary>
         /// Create instance of Queue with default capacity = 4.
@@ -48,8 +53,18 @@ namespace QueueLogic
             {
                 throw new ArgumentOutOfRangeException($"The {nameof(capacity)} can not be less zero.");
             }
-            queueItems = new T[capacity];
+
+            if (capacity == 0)
+            {
+                queueItems = new T[DEFAULTCAPACITY];
+            }
+            else
+            {
+                queueItems = new T[capacity];
+            }
+            
             Count = 0;
+            tail = -1;
         }
 
         /// <summary>
@@ -74,7 +89,9 @@ namespace QueueLogic
             {
                 queueItems = new T[DEFAULTCAPACITY];
                 Count = 0;
+                tail = -1;
             }
+            
             else
             {
                 queueItems = new T[inputCollection.Length];
@@ -95,14 +112,15 @@ namespace QueueLogic
         {
             if (IsFull())
             {
-                int length = queueItems.Length == 0 ? DEFAULTCAPACITY : (int)(queueItems.Length * 1.5);
+                int length =  (int)(queueItems.Length * 2);
                 T[] newQueueItems = new T[length];
-                queueItems.CopyTo(newQueueItems, 0);
+                Array.Copy(queueItems, head, newQueueItems, 0, Count);
                 queueItems = newQueueItems;
+                head = 0;
             }
 
-            queueItems[tail] = item;
-            tail++;
+            tail = (tail + 1) % queueItems.Length;
+            queueItems[tail] = item;          
             version++;
             Count++;
         }
@@ -125,7 +143,7 @@ namespace QueueLogic
 
             T headItem = queueItems[head];
             queueItems[head] = default(T);
-            head++;
+            head = (head + 1) / queueItems.Length;
             version++;
             Count--;
 
@@ -193,22 +211,11 @@ namespace QueueLogic
         /// <returns>
         /// true - if queue is empty. false - if queue is not empty.
         /// </returns>
-        public bool IsEmpty()
-        {
-            return Count == 0 ? true : false;
-        }
-
+        public bool IsEmpty() => Count == 0;
+       
         /// <summary>
-        /// Check for filling  of queue.
+        /// Clear queue.
         /// </summary>
-        /// <returns>
-        /// true - if queue is full. false - if queue is not full.
-        /// </returns>
-        public bool IsFull()
-        {
-            return Count == queueItems.Length ? true : false;
-        }
-
         public void Clear()
         {
             Array.Clear(queueItems, 0, tail);
@@ -222,7 +229,7 @@ namespace QueueLogic
         /// <returns>
         /// Instance of IEnumerator.
         /// </returns>
-        public IEnumerator<T> GetEnumerator()
+        public Enumerator GetEnumerator()
         {
             return new Enumerator(this);
         }
@@ -237,9 +244,17 @@ namespace QueueLogic
            return GetEnumerator();
         }
 
+        /// <summary>
+        /// Check for filling  of queue.
+        /// </summary>
+        /// <returns>
+        /// true - if queue is full. false - if queue is not full.
+        /// </returns>
+        private bool IsFull() => Count == queueItems.Length;
+
         #region Iterator implementation
 
-        private struct Enumerator : IEnumerator<T>
+        public struct Enumerator : IEnumerator<T>
         {
             private readonly Queue<T> queue;
             private readonly int version;
