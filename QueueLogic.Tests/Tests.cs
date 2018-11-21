@@ -34,6 +34,41 @@ namespace QueueLogic.Tests
         }
 
         [Test]
+        public void Queue_EnqueueThreeItemsInQueueofSizeOne_QueueSizeGrow()
+        {
+            // Arrange 
+            var queueOfInt = new Queue<int>(1);
+
+            // Act
+            queueOfInt.Enqueue(1);
+            queueOfInt.Enqueue(2);
+            queueOfInt.Enqueue(3);
+
+            // Assert
+            Assert.IsTrue(queueOfInt.Count == 3);
+            Assert.IsTrue(queueOfInt.Capacity == 4);
+        }
+
+
+        [Test]
+        public void Queue_CircularBehavior_EnqueueThreeItemsInQueueofSizeOne_QueueSizeDontGrow()
+        {
+            // Arrange 
+            var queueOfInt = new Queue<int>(3);
+
+            // Act
+            queueOfInt.Enqueue(1);
+            queueOfInt.Enqueue(2);
+            queueOfInt.Enqueue(3);
+            queueOfInt.Dequeue();
+            queueOfInt.Enqueue(5);
+
+            // Assert
+            Assert.IsTrue(queueOfInt.Count == 3);
+            Assert.IsTrue(queueOfInt.Capacity == 3);
+        }
+
+        [Test]
         public void CreateQueue_WithGivenCollection_InstanceIsNotNullAndHaveTwoItems()
         {
             //Arrange
